@@ -14,17 +14,7 @@ public class LabProgram {
         for (int i = 0; i < nums.length; i++) {
 
             // If the current number is odd
-            if (nums[i] % 2 == 1) {
-
-                // Add it to the result array
-                result[oddCount] = nums[i];
-
-                // Increment the counter
-                oddCount++;
-            }
-
-            // handle negative numbers
-            if (nums[i] % 2 == -1) {
+            if (nums[i] % 2 == 1 || nums[i] % 2 == -1) {
 
                 // Add it to the result array
                 result[oddCount] = nums[i];
