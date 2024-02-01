@@ -51,7 +51,8 @@ public class Polymorphism {
          */
 
         /* Now consider this code: */
-        Employee anotherMichael = new Employee("Michael", 56, 370000, "Dunder Mifflin");
+        // Employee anotherMichael = new Employee("Michael", 56, 370000, "Dunder
+        // Mifflin");
 
         /*
          * This is the exact same person as above, the only difference is that
