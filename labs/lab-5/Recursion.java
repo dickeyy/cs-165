@@ -148,7 +148,8 @@ public class Recursion {
         sb.append(prev);
         for (int i = 1; i < word.length(); i++) {
             char ch = word.charAt(i);
-            if (Character.toLowerCase(ch) != Character.toLowerCase(prev) || !Character.isLetter(ch)) {
+            if (Character.toLowerCase(ch) != Character.toLowerCase(prev) ||
+                    !Character.isLetter(ch)) {
                 sb.append(ch);
                 prev = ch;
             }
