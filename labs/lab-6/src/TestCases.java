@@ -8,8 +8,9 @@ public class TestCases {
 
 	// Switch which line is commented out in order to test the correct vs broken
 	// code
-	TestingFunctions functions = new BlackBoxCorrect();
+	// TestingFunctions functions = new BlackBoxCorrect();
 	// TestingFunctions functions = new BlackBoxIncorrect();
+	TestingFunctions functions = new MyFunctions();
 
 	/**
 	 * This is a simple validity check for the method greatestCommonDivisor. Checks
