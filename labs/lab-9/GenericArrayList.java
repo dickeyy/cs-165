@@ -1,9 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class GenericArrayList {
+public class GenericArrayList<T> {
 
-    private Object[] data;
+    private T[] data;
     private int size;
 
     /*
@@ -21,7 +21,7 @@ public class GenericArrayList {
     private void resizeData(int newSize) {
 
         // create a new array
-        Object[] newData = new Object[newSize];
+        T[] newData = (T[]) new Object[newSize];
 
         // copy the elements from the data array to the new array
         for (int i = 0; i < size; i++) {
@@ -45,7 +45,7 @@ public class GenericArrayList {
     public GenericArrayList(int initialCapacity) {
 
         // initialize the data array to handle generic types
-        data = new Object[initialCapacity];
+        data = (T[]) new Object[initialCapacity];
 
         // initialize the size
         size = 0;
@@ -57,7 +57,7 @@ public class GenericArrayList {
      * For instance, if there are 5 elements, this should go into index 5 (the
      * sixth spot).
      */
-    public void add(String str) {
+    public void add(T str) {
 
         // increase the size
         size++;
@@ -79,7 +79,7 @@ public class GenericArrayList {
      * 10 on an ArrayList that only has 7 elements is not allowed.
      * If the index is out of bounds, stop the method without doing anything.
      */
-    public void add(int index, String str) {
+    public void add(int index, T str) {
 
         // check if the index is valid
         if (index < 0 || index > size) {
@@ -108,7 +108,7 @@ public class GenericArrayList {
      * Like the method above, the index may not be valid. Return null if the
      * index given is out of bounds.
      */
-    public Object get(int index) {
+    public T get(int index) {
 
         // check if the index is valid
         if (index < 0 || index >= size) {
@@ -192,21 +192,21 @@ public class GenericArrayList {
         Point p = pointList.get(2);
 
         if (p.x != 19.16f && p.y != 22.32f) {
-        throw new AssertionError("Your GenericArrayList compiled properly "
-        + "but is not correctly storing things. Make sure you didn't "
-        + "accidentally change any of your ArrayStringList code, aside "
-        + "from changing types.");
+            throw new AssertionError("Your GenericArrayList compiled properly "
+                    + "but is not correctly storing things. Make sure you didn't "
+                    + "accidentally change any of your ArrayStringList code, aside "
+                    + "from changing types.");
         }
 
         GenericArrayList<Float> floatList = new GenericArrayList<Float>(2);
 
         for (float f = 0.0f; f < 100.0f; f += 4.3f) {
-        floatList.add(f);
+            floatList.add(f);
         }
 
         float f = floatList.get(19);
 
-        System.out.println("Hurray, everything worked!")
+        System.out.println("Hurray, everything worked!");
 
     }
 }
