@@ -90,17 +90,36 @@ public class StatePopulations {
 
         // Read in ZIP code from user
         myZipCode = scnr.nextInt();
+        String stateAbbreviation = null;
+        String stateName = null;
+        Integer population = null;
 
+        // Using ZIP code, find state abbreviation
         for (i = 0; i < zipCodeState.size(); ++i) {
-            // TODO: Using ZIP code, find state abbreviation
+            if (zipCodeState.get(i).getValue1() == myZipCode) {
+                stateAbbreviation = zipCodeState.get(i).getValue2();
+                break;
+            }
         }
 
+        // Using state abbreviation, find state name
         for (i = 0; i < abbrevState.size(); ++i) {
-            // TODO: Using state abbreviation, find state name
+            if (abbrevState.get(i).getValue1().equals(stateAbbreviation)) {
+                stateName = abbrevState.get(i).getValue2();
+                break;
+            }
         }
 
+        // Using state name, find population. Print pair info.
         for (i = 0; i < statePopulation.size(); ++i) {
-            // TODO: Using state name, find population. Print pair info.
+            if (statePopulation.get(i).getValue1().equals(stateName)) {
+                population = statePopulation.get(i).getValue2();
+                break;
+            }
+        }
+
+        if (population != null) {
+            System.out.println(stateName + ": " + population);
         }
     }
 }
