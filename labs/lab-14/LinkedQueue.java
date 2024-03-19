@@ -26,7 +26,7 @@ public class LinkedQueue implements MyQueue {
      * The Constructor should set maxCount to the maximum amount of customers for
      * the day
      * also make sure to initialize size
-     * 
+     *
      * @param maxCount
      */
     public LinkedQueue(int maxCount) {
@@ -49,19 +49,10 @@ public class LinkedQueue implements MyQueue {
      */
     @Override
     public boolean add(String name) {
-        if (size >= maxCount) {
-            throw new IllegalStateException("Queue is full");
+        if (offer(name)) {
+            return true
         }
-        Node newNode = new Node(name);
-        if (head == null) {
-            head = newNode;
-            tail = newNode;
-        } else {
-            tail.next = newNode;
-            tail = newNode;
-        }
-        size++;
-        return true;
+        throw new IllegalStateException("Queue is full");
     }
 
     /**
@@ -180,7 +171,7 @@ public class LinkedQueue implements MyQueue {
 
     /**
      * TODO FINISH ME
-     * 
+     *
      * @return The current number of items in the string
      */
     @Override
