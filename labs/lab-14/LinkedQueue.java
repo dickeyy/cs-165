@@ -50,7 +50,7 @@ public class LinkedQueue implements MyQueue {
     @Override
     public boolean add(String name) {
         if (offer(name)) {
-            return true
+            return true;
         }
         throw new IllegalStateException("Queue is full");
     }
