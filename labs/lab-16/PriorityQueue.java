@@ -52,27 +52,11 @@ public class PriorityQueue {
      * Remember to do so in a way that keeps the queue in sorted order!
      */
     public void push(Customer customer) {
-        // If the queue is full, double the size of the array
-        if (size == data.length) {
-            Customer[] newData = new Customer[data.length * 2];
-            for (int i = 0; i < data.length; i++) {
-                newData[i] = data[i];
-            }
-            data = newData;
+        int index = size;
+        while (index > 0 && customer.compareTo(data[index - 1]) > 0) {
+            data[index] = data[index - 1];
+            index--;
         }
-
-        // Find the index where the customer should be inserted
-        int index = 0;
-        while (index < size && data[index].compareTo(customer) > 0) {
-            index++;
-        }
-
-        // Shift all elements to the right
-        for (int i = size; i > index; i--) {
-            data[i] = data[i - 1];
-        }
-
-        // Insert the customer
         data[index] = customer;
         size++;
     }
