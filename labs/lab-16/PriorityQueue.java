@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public class PriorityQueue {
 
@@ -81,7 +82,7 @@ public class PriorityQueue {
      */
     public Customer pop() {
         if (size == 0) {
-            return null;
+            throw new IllegalStateException("Queue is empty");
         }
 
         Customer customer = data[0];
@@ -97,7 +98,7 @@ public class PriorityQueue {
      */
     public Customer peek() {
         if (size == 0) {
-            return null;
+            throw new IllegalStateException("Queue is empty");
         }
         return data[0];
     }
@@ -110,8 +111,8 @@ public class PriorityQueue {
      * on a customer.
      */
     public void bump(int customerIndex, double amount) {
-        if (customerIndex < 0 || customerIndex >= size) {
-            return;
+        if (size == 0) {
+            throw new NoSuchElementException("fart");
         }
 
         data[customerIndex].donate(amount);
