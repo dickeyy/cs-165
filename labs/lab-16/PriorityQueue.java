@@ -5,6 +5,7 @@ public class PriorityQueue {
 
     /* This class is finished for you. */
     public static class Customer implements Comparable<Customer> {
+
         private double donation;
 
         public Customer(double donation) {
@@ -165,6 +166,5 @@ public class PriorityQueue {
 
         System.out.println("Line should be:\n[$10.00, $9.00, $8.00, $7.00, $7.00, null]");
         System.out.println(line);
-
     }
 }
