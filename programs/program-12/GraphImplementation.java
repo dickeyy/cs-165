@@ -1,19 +1,17 @@
-// GraphImplementation.java - supplied code for graph assignment
-
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 public class GraphImplementation extends GraphAbstract {
 
-    // Main entry point
     public static void main(String[] args) {
-        // Instantiate code
         GraphImplementation impl = new GraphImplementation();
         Scanner input = new Scanner(System.in);
+
+        // Input file name and starting city
         String fileName = input.nextLine();
         String startCity = input.nextLine();
+
         // Read distances chart
         System.out.println("Reading Chart: " + fileName);
         impl.readGraph(fileName);
@@ -24,6 +22,7 @@ public class GraphImplementation extends GraphAbstract {
         impl.depthFirst(startCity);
         System.out.println();
 
+        // Print breadth first search
         System.out.println("Breadth First Search:");
         impl.breadthFirst(startCity);
         System.out.println();
@@ -32,48 +31,54 @@ public class GraphImplementation extends GraphAbstract {
     // Reads mileage chart from CSV file
     public void readGraph(String filename) {
         ArrayList<String> lines = readFile(filename);
-        for (String line : lines) {
+        String[] citiesArray = lines.get(0).split(",");
+        for (int i = 1; i < lines.size(); i++) {
+            String line = lines.get(i);
             String[] parts = line.split(",");
             String city = parts[0];
             addCity(city);
-            for (int i = 1; i < parts.length; i++) {
-                String[] pair = parts[i].split(":");
-                String dest = pair[0];
-                int dist = Integer.parseInt(pair[1]);
-                addCity(dest);
-                addEdge(city, dest, dist);
+            for (int j = 1; j < parts.length; j++) {
+                String dest = citiesArray[j];
+                if (!parts[j].isEmpty()) {
+                    int dist = Integer.parseInt(parts[j]);
+                    addCity(dest);
+                    addEdge(city, dest, dist);
+                }
             }
         }
     }
 
     public void depthFirst(String startCity) {
-        depthFirst(getIndex(startCity), new ArrayList<>());
+        Set<String> visited = new HashSet<>();
+        depthFirstHelper(startCity, visited);
     }
 
-    // Recursive helper method
-    public void depthFirst(int index, ArrayList<Integer> visited) {
-        visited.add(index);
-        System.out.println(getCity(index));
-        for (int i = 0; i < numCities(); i++) {
-            if (isEdge(index, i) && !visited.contains(i)) {
-                depthFirst(i, visited);
+    // Recursive helper method for depth-first search
+    private void depthFirstHelper(String city, Set<String> visited) {
+        if (!visited.contains(city)) {
+            visited.add(city);
+            System.out.println("Visited " + city);
+            ArrayList<String> neighbors = getNeighbors(city);
+            for (String neighbor : neighbors) {
+                depthFirstHelper(neighbor, visited);
             }
         }
     }
 
     public void breadthFirst(String startCity) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(getIndex(startCity));
-        ArrayList<Integer> visited = new ArrayList<>();
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        queue.add(startCity);
+        visited.add(startCity);
+
         while (!queue.isEmpty()) {
-            int index = queue.remove();
-            if (!visited.contains(index)) {
-                visited.add(index);
-                System.out.println(getCity(index));
-                for (int i = 0; i < numCities(); i++) {
-                    if (isEdge(index, i) && !visited.contains(i)) {
-                        queue.add(i);
-                    }
+            String city = queue.poll();
+            System.out.println("Visited " + city);
+            ArrayList<String> neighbors = getNeighbors(city);
+            for (String neighbor : neighbors) {
+                if (!visited.contains(neighbor)) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
                 }
             }
         }
@@ -99,12 +104,23 @@ public class GraphImplementation extends GraphAbstract {
         return cities.indexOf(city);
     }
 
-    private String getCity(int index) {
-        return cities.get(index);
+    private ArrayList<String> getNeighbors(String city) {
+        ArrayList<String> neighbors = new ArrayList<>();
+        int index = getIndex(city);
+        for (int i = 0; i < numCities(); i++) {
+            if (edges[index][i] > 0) {
+                neighbors.add(getCity(i));
+            }
+        }
+        Collections.sort(
+            neighbors,
+            Comparator.comparingInt(neighbor -> edges[index][getIndex(neighbor)])
+        );
+        return neighbors;
     }
 
-    private boolean isEdge(int index1, int index2) {
-        return edges[index1][index2] > 0;
+    private String getCity(int index) {
+        return cities.get(index);
     }
 
     private int numCities() {
@@ -114,11 +130,7 @@ public class GraphImplementation extends GraphAbstract {
     private ArrayList<String> cities = new ArrayList<>();
     private int[][] edges = new int[100][100];
 
-    /**
-     * Reads the contents of file to {@code ArrayList}
-     * @param filename the file to read from
-     * @return an ArrayList of the contents
-     */
+    // Reads the contents of file to ArrayList
     static ArrayList<String> readFile(String filename) {
         ArrayList<String> contents = new ArrayList<>();
         try (Scanner reader = new Scanner(new File(filename))) {
